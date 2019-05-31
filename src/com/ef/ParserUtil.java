@@ -256,11 +256,15 @@ public class ParserUtil {
      * @return array list of Log objects
      */
     private static List<LogObj> getAllLogsFromFileAndAddToDataBase(String filePath) {
-
+        
         //get all logs from file
         List<LogObj> logs = readAccessLogFile(filePath);
 
         if (!logs.isEmpty()) {
+            
+      //refresh database tables so has not to have an overpopulated table from each argument request
+        ParserUtil.refeshAllDatabaseTables();
+        
             //add logs to database
             addLogsToDatabase(logs);
 
@@ -392,23 +396,23 @@ public class ParserUtil {
 /**
  * delete logs and blocked ip tables
  */
-    protected static void cleanAllDatabase() {
+    protected static void refeshAllDatabaseTables() {
 
-        clearDb("DELETE FROM logs");
-        clearDb("DELETE FROM blocked_ips");
+        refreshDbTables("DELETE FROM logs");
+        refreshDbTables("DELETE FROM blocked_ips");
     }
 
     /*'
     handle database delete by passing in query
     */
-    private static void clearDb(String query) {
+    private static void refreshDbTables(String query) {
         try (Connection con = DBConnect.getDbConnection()) {
 
             Statement st = con.createStatement();
             int deletedRows = st.executeUpdate(query);
 
             if (deletedRows > 0) {
-                System.out.println("deleted successfully");
+             
             } else {
 
             }
