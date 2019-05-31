@@ -2,14 +2,12 @@ package com.ef;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Value Object representing log properties(Date, IP, Request, Status, User
+ * Value Object representing log properties(Date, IP, Request, Status, User agent) to be persisted in database
  * Agent)
  *
- * @author Adebeslick
+ * @author Adebayo Adeniyan
  */
 public class LogObj {
 
